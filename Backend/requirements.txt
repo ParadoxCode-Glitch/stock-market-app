@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+yfinance
+newspaper3k
+vaderSentiment
+numpy
+pandas
+scikit-learn
+tensorflow
