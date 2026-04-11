@@ -6,4 +6,9 @@ vaderSentiment
 numpy
 pandas
 scikit-learn
-tensorflow
+torch
+python-dotenv
+groq
+pydantic
+requests
+lxml_html_clean
