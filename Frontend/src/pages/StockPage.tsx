@@ -42,7 +42,12 @@ export default function StockPage() {
     const loadData = async () => {
       try {
         const stockData = await fetchStock(symbol);
-        setStock(stockData);
+        // Validate we got real data (not an error response or empty result)
+        if (!stockData || stockData.error || !stockData.price) {
+          setStock(null);
+        } else {
+          setStock(stockData);
+        }
 
         // Concurrent loads
         const [newsData, finData, predData, histData] = await Promise.all([
