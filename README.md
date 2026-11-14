@@ -1,76 +1,121 @@
-# Stock Market Analysis App 📈
+# Indian Stock Market Analysis
 
-A modern full-stack application for tracking the Indian stock market, powered by **Groq/xAI** for deep financial sentiment and portfolio insights, and a **Transformer-based model** for price prediction.
+A full-stack web application for exploring Indian equities, reviewing market information, comparing companies, and tracking a personal portfolio. The project combines a React and TypeScript interface with a FastAPI backend.
 
-## 🚀 Features
+## Features
 
-- **Real-time Market Data:** Fetches live data for Indian stocks via Yahoo Finance API.
-- **AI-Powered Insights:** Uses Llama 3 (via Groq) to analyze news sentiment and provide portfolio strategy recommendations.
-- **Deep Price Prediction:** Incorporates a custom Transformer model (`transformer_service.py`) for predicting price movements.
-- **Interactive Charts:** High-performance visualizations using Chart.js.
-- **Portfolio Management:** Track holdings, analyze sector allocation, and view performance metrics.
-- **Stock Comparison:** Side-by-side comparison of fundamentals and technicals with AI-generated verdicts.
+- **Equity catalogue:** Search a committed catalogue containing 2,278 NSE equity symbols and company names.
+- **Market and stock information:** Retrieve current quote fields, company information, financial data, and historical price series through Yahoo Finance data access.
+- **Charts and comparisons:** View price history and compare multiple symbols using financial and market metrics.
+- **Portfolio tracking:** Record holdings and review portfolio value, allocation, history, and related insights.
+- **News and sentiment:** Retrieve stock-related news and calculate sentiment signals.
+- **AI-assisted analysis:** Backend endpoints provide market intelligence, portfolio insights, and explanations for stock comparisons.
+- **Transformer forecast prototype:** A PyTorch time-series Transformer is trained on recent historical closing prices at request time to produce a five-session forecast.
 
-## 🛠️ Tech Stack
+Forecasts and generated insights are experimental software outputs, not investment advice or guarantees of future performance.
 
-### Frontend
-- **React 18** (TypeScript, Vite)
-- **Tailwind CSS** (Styling)
-- **Framer Motion** (Animations)
-- **Lucide React** (Icons)
-- **Chart.js** (Visualizations)
+## Technology
+
+**Frontend**
+- React 18, TypeScript, and Vite
+- Tailwind CSS
+- Chart.js and react-chartjs-2
+- Framer Motion
+- React Router
+
+**Backend**
+- Python and FastAPI
+- yfinance, pandas, and NumPy
+- PyTorch and scikit-learn
+- News and sentiment processing utilities
+- Groq integration for language-model-assisted analysis
+
+## Repository structure
+
+    Backend/
+      main.py
+      fetch_stocks.py
+      services/
+        yahoo_service.py
+        market_service.py
+        financial_service.py
+        news_service.py
+        sentiment_service.py
+        transformer_service.py
+        ai_service.py
+    Frontend/
+      src/
+        components/
+        data/stocks.ts
+        pages/
+        services/api.ts
+
+## Requirements
+
+- Python and pip
+- Node.js and npm
+- API credentials for the external AI service used by the backend
+
+## Setup
+
+Clone the repository:
+
+    git clone https://github.com/ParadoxCode-Glitch/stock-market-app.git
+    cd stock-market-app
 
 ### Backend
-- **FastAPI** (Python 3.10+)
-- **Yahoo Finance API** (via `yfinance`)
-- **Groq/xAI** (LLM Integration for RAG-based analysis)
-- **Manual Transformer** (PyTorch based custom model)
 
-## 📦 Setup & Installation
+    cd Backend
+    python -m venv .venv
 
-### 1. Clone the repository
-```bash
-git clone <your-repository-url>
-cd Stock-Market-App
-```
+Activate the environment:
 
-### 2. Backend Setup
-```bash
-cd Backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+    # macOS / Linux
+    source .venv/bin/activate
 
-#### Environment Variables
-Create a `.env` file in the `Backend` directory:
-```env
-GROQ_API_KEY="your_groq_api_key"
-XAI_API_KEY="your_xai_api_key_optional"
-```
+    # Windows PowerShell
+    .venv\Scripts\Activate.ps1
 
-### 3. Frontend Setup
-```bash
-cd Frontend
-npm install
-```
+Install the backend dependencies:
 
-## 🏃 Running the Application
+    pip install -r requirements.txt
 
-### Start Backend
-```bash
-cd Backend
-uvicorn main:app --reload
-```
+Create a `.env` file in the `Backend` directory and add the credentials required by the AI service configuration in `Backend/services/ai_service.py`. Do not commit API keys.
 
-### Start Frontend
-```bash
-cd Frontend
-npm run dev
-```
+Start the API:
 
-The application will be available at `http://localhost:5173`.
+    uvicorn main:app --reload
 
-## 🛡️ License
+The FastAPI service runs locally on port 8000 by default. Its root endpoint is `/`.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Frontend
+
+In a second terminal:
+
+    cd Frontend
+    npm install
+    npm run dev
+
+Vite prints the local development URL when the frontend starts.
+
+## Stock catalogue
+
+The frontend catalogue is stored in `Frontend/src/data/stocks.ts`. The repository also includes `Backend/fetch_stocks.py`, which retrieves the NSE equity list and can regenerate the catalogue.
+
+## Forecasting implementation
+
+The Transformer service:
+- Retrieves up to one year of historical closing prices.
+- Uses a 30-session input window.
+- Trains a small Transformer model for 50 epochs during the request.
+- Produces a five-session forecast.
+
+The repository does not provide a documented held-out evaluation or verified prediction-accuracy score. Forecast output should therefore be understood as a prototype feature, not a validated trading signal.
+
+## Disclaimer
+
+This project is for educational and informational use. Market data may be delayed, incomplete, or unavailable, and model-generated analysis can be wrong. It is not financial, investment, or trading advice.
+
+## License
+
+No license file is currently included. Contact the repository owner before reusing or redistributing this project.
